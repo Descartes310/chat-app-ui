@@ -14,12 +14,14 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme();
 
 export default function SignIn() {
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
-      email: data.get('login'),
+      login: data.get('login'),
+      fullname: data.get('fullname'),
       password: data.get('password'),
     });
   };
@@ -40,9 +42,18 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="fullname"
+              label="fullname"
+              name="fullname"
+              autoFocus
+            />
             <TextField
               margin="normal"
               required
@@ -50,7 +61,6 @@ export default function SignIn() {
               id="login"
               label="Login"
               name="login"
-              autoFocus
             />
             <TextField
               margin="normal"
@@ -60,7 +70,6 @@ export default function SignIn() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
             />
 
             <Button
@@ -69,12 +78,12 @@ export default function SignIn() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
             <Grid container>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Already have an account? Sign Ip"}
                 </Link>
               </Grid>
             </Grid>
