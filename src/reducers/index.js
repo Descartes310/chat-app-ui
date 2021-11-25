@@ -1,10 +1,11 @@
 /**
  * App Reducers
  */
- import { combineReducers } from 'redux';
+import { combineReducers } from 'redux';
+import authUserReducer from './AuthUserReducer';
 
- const reducers = combineReducers({
-
+const reducers = combineReducers({
+    authUser: authUserReducer,
 });
 
 export default reducers;

@@ -6,3 +6,7 @@ export const AUTH = {
     LOGIN: 'oauth/token',
     REGISTER: 'auth/register'
 };
+
+export const USER = {
+    KYC: 'api/user/kyc'
+};
