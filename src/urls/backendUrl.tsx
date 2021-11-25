@@ -8,5 +8,5 @@ export const AUTH = {
 };
 
 export const USER = {
-    KYC: 'api/user/kyc'
+    KYC: 'api/users/kyc'
 };

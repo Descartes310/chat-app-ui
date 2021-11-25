@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import { connect } from 'react-redux';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -10,19 +11,20 @@ import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { loginUserWithLoginAndPassword } from "../actions/AuthActions";
 
 const theme = createTheme();
 
-export default function SignIn() {
-  
+function SignIn(props: any) {
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-        login: data.get('login'),
+    props.loginUserWithLoginAndPassword({
+      login: data.get('login'),
       password: data.get('password'),
-    });
+    }).catch();
   };
 
   return (
@@ -46,7 +48,7 @@ export default function SignIn() {
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
-              required
+              required={true}
               fullWidth
               id="login"
               label="Login"
@@ -55,7 +57,7 @@ export default function SignIn() {
             />
             <TextField
               margin="normal"
-              required
+              required={true}
               fullWidth
               name="password"
               label="Password"
@@ -84,3 +86,5 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+export default connect(() => { }, { loginUserWithLoginAndPassword })(SignIn);

@@ -15,8 +15,8 @@ import {
 import api from '../api';
 import AppConfig from '../constants/AppConfig';
 import { USER, AUTH } from '../urls/backendUrl';
-import {removeAuthToken, saveAuthToken} from "../helpers/token";
-import {getFullAuthorisationRequestConfig} from "../helpers/helpers";
+import { removeAuthToken, saveAuthToken } from "../helpers/tokens";
+import { getFullAuthorisationRequestConfig } from "../helpers/helpers";
 
 /**
  * Redux Action get auth information
@@ -25,8 +25,9 @@ export const setAuthUser = () => (dispatch: any) => {
     dispatch({ type: SET_AUTH_USER });
 
     return api
-        .get(`${USER.KYC}`, { skipError: true })
+        .get(`${USER.KYC}`)
         .then((response: any) => {
+            console.log(response)
             dispatch({ type: SET_AUTH_USER_SUCCESS, payload: response.data });
             return Promise.resolve();
         })
@@ -40,12 +41,13 @@ export const setAuthUser = () => (dispatch: any) => {
 /**
  * Redux Action To Sigin User with login and password
  */
- export const loginUserWithLoginAndPassword = (data: any) => (dispatch: any) => {
+export const loginUserWithLoginAndPassword = (data: any) => (dispatch: any) => {
     dispatch({ type: LOGIN_USER });
 
     const config = getFullAuthorisationRequestConfig();
 
-    const _data = {...data};
+    const _data = { ...data };
+    console.log(data.password)
     _data.username = data.login;
     _data.grantType = AppConfig.oauth.grantType;
     _data.clientId = AppConfig.oauth.clientId;

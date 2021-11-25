@@ -78,3 +78,17 @@ export function toSnakeCase(obj: any) {
     };
     return { headers, shouldSkipToken: true, withCredentials: true, skipError: true };
 };
+
+/**
+ * Check if the user's value into store is valid
+ *
+ * @param authUser
+ * @param tokens
+ */
+ export const isUserIntoStoreValid = (
+    authUser: any,
+) => {
+    return ((authUser !== null &&
+        authUser !== undefined)
+    );
+};
