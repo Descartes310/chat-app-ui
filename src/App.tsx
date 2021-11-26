@@ -8,9 +8,11 @@ import { connect } from 'react-redux';
 import React, { Component } from 'react';
 import { AUTH, HOME } from "./urls/frontendUrl";
 import { getAuthToken } from "./helpers/tokens";
-import { isUserIntoStoreValid } from "./helpers/helpers";
+import blue from "@material-ui/core/colors/blue";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import { setAuthUser, loginIntoStore } from './actions/AuthActions';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from "@material-ui/core/styles";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 type MyProps = {
   setAuthUser: any,
@@ -19,10 +21,19 @@ type MyProps = {
 };
 type MyState = {};
 
+const theme = createTheme({
+  palette: {
+    primary: blue
+  },
+  typography: {
+    htmlFontSize: 1,
+    fontSize: 0.8
+  }
+});
+
 class App extends Component<MyProps, MyState> {
 
   componentDidMount() {
-    console.log(this.props.authUser.data);
     if (!this.props.authUser.data) {
       this.refreshUserDatas();
     }
@@ -55,9 +66,9 @@ class App extends Component<MyProps, MyState> {
 
 
   render() {
-    console.log("Je suis dans le refresh render => "+ window.location.pathname);
     return (
-      <>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <BrowserRouter>
           {this.props.authUser.data ? (
             <>
@@ -74,7 +85,7 @@ class App extends Component<MyProps, MyState> {
             </Routes>
           )}
         </BrowserRouter>
-      </>
+      </ThemeProvider>
     )
   }
 }
