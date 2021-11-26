@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import SockJsClient from 'react-stomp';
 import Avatar from '@mui/material/Avatar';
 import { useState, useEffect } from "react";
 import ChatList from "../components/ChatList";
@@ -51,6 +52,8 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const SOCKET_URL = 'http://localhost:8080/ws-chat/';
+
 function Chat(props: any) {
     const classes = useStyles();
 
@@ -65,7 +68,7 @@ function Chat(props: any) {
 
     const [selectedIdx] = useState(0);
     const [chats, setChats] = useState([]);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState<any>([]);
 
     const handleClick = (e: any, item: any) => {
         props.setSelectedChat(item);
@@ -85,8 +88,20 @@ function Chat(props: any) {
         });
     }
 
+    const onMessageReceived = (message: any) => {
+        setMessages([...messages, message]);
+        console.log('New Message Received!!', message);
+    }
+
     return (
         <div className={classes.appContainer}>
+            <SockJsClient
+                debug={true}
+                url={SOCKET_URL}
+                topics={['/topic/group']}
+                onDisconnect={console.log("Disconnected!")}
+                onMessage={msg => onMessageReceived(msg)}
+            />
             <AppSidebar
                 items={items}
                 selectedIdx={selectedIdx}
@@ -117,7 +132,7 @@ function Chat(props: any) {
                     )}
                 </Box>
             </Box>
-        </div>
+        </div >
     );
 }
 

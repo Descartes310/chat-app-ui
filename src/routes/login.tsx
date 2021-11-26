@@ -5,9 +5,9 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import { AUTH } from '../urls/frontendUrl';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
+import { AUTH, HOME } from '../urls/frontendUrl';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -25,6 +25,8 @@ function SignIn(props: any) {
     props.loginUserWithLoginAndPassword({
       login: data.get('login'),
       password: data.get('password'),
+    }).then(() => {
+      window.location.href = HOME;
     }).catch();
   };
 

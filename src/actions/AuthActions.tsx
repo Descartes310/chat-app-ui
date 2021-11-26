@@ -15,6 +15,7 @@ import {
 import api from '../api';
 import AppConfig from '../constants/AppConfig';
 import { USER, AUTH } from '../urls/backendUrl';
+import { AUTH as FRONTEND_AUTH } from '../urls/frontendUrl';
 import { removeAuthToken, saveAuthToken } from "../helpers/tokens";
 import { getFullAuthorisationRequestConfig } from "../helpers/helpers";
 
@@ -27,13 +28,13 @@ export const setAuthUser = () => (dispatch: any) => {
     return api
         .get(`${USER.KYC}`)
         .then((response: any) => {
-            console.log(response)
             dispatch({ type: SET_AUTH_USER_SUCCESS, payload: response.data });
             return Promise.resolve();
         })
         .catch((error: any) => {
-            console.log(error)
             dispatch({ type: SET_AUTH_USER_FAILURE });
+            if (!window.location.pathname.includes('login') && !window.location.pathname.includes('register'))
+                window.location.href = FRONTEND_AUTH.LOGIN;
             return Promise.reject();
         });
 };
@@ -47,7 +48,6 @@ export const loginUserWithLoginAndPassword = (data: any) => (dispatch: any) => {
     const config = getFullAuthorisationRequestConfig();
 
     const _data = { ...data };
-    console.log(data.password)
     _data.username = data.login;
     _data.grantType = AppConfig.oauth.grantType;
     _data.clientId = AppConfig.oauth.clientId;

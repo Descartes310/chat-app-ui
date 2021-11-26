@@ -6,8 +6,17 @@ import { sendMessages } from "../actions/independentActions";
 
 function ChatDetails({ selectedItem = {}, user, messages = [] }) {
 
-    const onSendMessages = (content) => {
-        sendMessages(selectedItem.id, { content });
+    const onSendMessages = (content, file) => {
+        let data = {};
+        console.log(file)
+
+        if(file) {
+            data.file = file;
+        } else {
+            data.content = content;
+        }
+
+        sendMessages(selectedItem.id, data, { fileData: ['file'], multipart: true });
     }
 
     return (
@@ -16,7 +25,7 @@ function ChatDetails({ selectedItem = {}, user, messages = [] }) {
             <Box p={3} height="100%" style={{ overflowY: "auto" }}>
                 <ChatConversation interlocutor={selectedItem.users.filter(u => u.id !== user.id)[0]} user={user} messages={messages} />
             </Box>
-            <ChatDetailsFooter onSend={(text) => onSendMessages(text)} />
+            <ChatDetailsFooter onSend={(text, file) => onSendMessages(text, file)} />
         </Box>
     );
 }

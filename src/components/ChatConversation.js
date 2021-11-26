@@ -22,7 +22,7 @@ const ChatConversation = ({ user, interlocutor, messages = [] }) => {
           <Chat
             side={message.sender.id === user.id ? "right" : "left"}
             avatar={message.sender.id === user.id ? user.avatar : interlocutor.avatar}
-            messages={[message.content]}
+            messages={[message]}
           />
         ))
       }

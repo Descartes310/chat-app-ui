@@ -2,6 +2,7 @@ import cx from 'clsx';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
+import { getFilePath } from '../helpers/helpers';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
@@ -116,16 +117,16 @@ const ChatMsg = ({ avatar, messages, side }) => {
               className={cx(styles.row, styles[`${side}Row`])}
             >
               <div className={cx(styles.msgBox, styles[`${side}MsgBox`])}>
-                {typeof msg === 'string' && (
+                {msg.messageType === 'TEXT' && (
                   <Typography
                     align={'left'}
                     className={cx(styles.msg, styles[side], attachClass(i))}
                   >
-                    {msg}
+                    {msg.content}
                   </Typography>
                 )}
-                {typeof msg === 'object' && msg.type === 'image' && (
-                  <img className={styles.image} alt={msg.alt} {...msg} />
+                {msg.messageType === 'FILE' && (
+                  <img className={styles.image} src={getFilePath(msg.file)} />
                 )}
               </div>
             </div>

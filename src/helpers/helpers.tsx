@@ -119,3 +119,17 @@ export function toSnakeCase(obj: any) {
             .catch((error: any) => reject(error));
     });
 };
+
+/**
+ * Profile full url of file
+ * @param file
+ * @returns String
+ */
+export function getFilePath(file: string) {
+    if (file)
+        if (file.startsWith('http') && file.includes(':')) {
+            return file;
+        } else {
+            return `${AppConfig.api.baseUrl}${file}`
+        }
+}

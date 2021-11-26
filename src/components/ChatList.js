@@ -31,7 +31,7 @@ const ChatListItem = ({ item, selectedItem, onClick, user }) => {
         primary={interlocutor.fullName}
         primaryTypographyProps={{ noWrap: true }}
         secondaryTypographyProps={{ noWrap: true }}
-        secondary={item.lastMessage ?  item.lastMessage.content : `Say Hi to ${interlocutor.fullName}`}
+        secondary={`Say Hi to ${interlocutor.fullName}`}
       />
     </ListItem>
   );

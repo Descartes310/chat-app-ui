@@ -7,7 +7,6 @@ import {
     SET_AUTH_USER_SUCCESS,
     SET_AUTH_USER_FAILURE,
 } from '../actions/types';
-import User from "../models/User";
 
 /**
  * initial state
@@ -25,7 +24,7 @@ const AuthUserReducer = (state = INIT_STATE, action: any) => {
             return { ...state, loading: true };
 
         case SET_AUTH_USER_SUCCESS:
-            return { ...state, loading: false, data: new User(action.payload) };
+            return { ...state, loading: false, data: action.payload };
 
         case SET_AUTH_USER_FAILURE:
             return { ...state, loading: false, error: action.payload };
