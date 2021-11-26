@@ -5,7 +5,7 @@ const AppConfig = {
        grantType: 'password',
     },
     api: {
-       baseUrl: `http://localhost:8080/`,
+       baseUrl: `http://178.238.225.128:8001/`,
        version: '1.0',
     },
  };

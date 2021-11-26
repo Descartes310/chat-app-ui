@@ -88,8 +88,11 @@ function Chat(props: any) {
         //Checking if user need to get the new message
         if (message.chat.users.map(u => u.id).includes(props.authUser.id)) {
             //Adding message if it's the opened chat
-            if (message.chat.id === props.selectedChat.id)
-                setMessages([...messages, message]);
+            if (props.selectedChat) {
+                if (message.chat.id === props.selectedChat.id) {
+                    setMessages([...messages, message]);
+                }
+            }
             console.log('New GOOD Message Received!!', message);
             //Update chat items
             getAllChats();

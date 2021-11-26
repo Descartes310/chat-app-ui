@@ -63,7 +63,7 @@ function SignUp(props: any) {
               required
               fullWidth
               id="fullname"
-              label="fullname"
+              label="Full Name"
               name="fullname"
               autoFocus
             />

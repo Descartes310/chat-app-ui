@@ -13,7 +13,7 @@ export const USER = {
     GET: 'api/users'
 };
 
-export const SOCKET_URL = 'http://localhost:8080/ws-chat/';
+export const SOCKET_URL = BASE+'ws-chat/';
 
 export const CHAT = {
     SELF: 'api/chats',
