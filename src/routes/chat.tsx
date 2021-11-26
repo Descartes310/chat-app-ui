@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 function Chat(props: any) {
     const classes = useStyles();
 
-    const items = [
+    const items: any[] = [
         {
             id: "chat",
             name: "Chat",

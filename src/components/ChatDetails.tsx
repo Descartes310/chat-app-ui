@@ -4,11 +4,11 @@ import ChatDetailsHeader from "./ChatDetailsHeader";
 import ChatDetailsFooter from "./ChatDetailsFooter";
 import { sendMessages } from "../actions/independentActions";
 
-function ChatDetails({ selectedItem = {}, user, messages = [] }) {
+function ChatDetails({ selectedItem = {}, user, messages = [] }: any) {
     const interlocutor = selectedItem.users.filter(u => u.id !== user.id)[0];
 
-    const onSendMessages = (content, file) => {
-        let data = {};
+    const onSendMessages = (content: string, file: any) => {
+        let data: any = {};
 
         if(file) {
             data.file = file;

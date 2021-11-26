@@ -17,8 +17,11 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme();
 
 function SignUp(props: any) {
+
+  const [hasError, setHasError] = React.useState(false);
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setHasError(false);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
@@ -28,7 +31,9 @@ function SignUp(props: any) {
       password: data.get('password'),
     }).then(() => {
       window.location.href = HOME;
-    }).catch();
+    }).catch(() => {
+      setHasError(true);
+    });
   };
 
   return (
@@ -50,6 +55,9 @@ function SignUp(props: any) {
             Sign up
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <p style={{ color: 'red', textAlign: 'center', display: hasError ? 'block' : 'none' }}>
+              This login is not available
+            </p>
             <TextField
               margin="normal"
               required

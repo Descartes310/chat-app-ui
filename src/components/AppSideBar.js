@@ -52,7 +52,7 @@ const AppSidebar = ({ items, selectedIdx, onChange }) => {
       orientation="vertical"
       value={selectedIdx}
       onChange={onChange}
-      aria-label="Vertical tabs example"
+      aria-label="Chat app sidebar"
       classes={{
         root: classes.tabs,
         flexContainer: classes.tabsContainer,
@@ -60,6 +60,7 @@ const AppSidebar = ({ items, selectedIdx, onChange }) => {
       }}
     >
       {items.map(item => (
+        // eslint-disable-next-line no-console
         <CustomTab
           key={item.id}
           icon={item.icon}

@@ -2,8 +2,8 @@ import Chat from "./Chat";
 import Box from "@material-ui/core/Box";
 import { useRef, useEffect } from "react";
 
-const ChatConversation = ({ user, interlocutor, messages = [] }) => {
-  var box = useRef(null);
+const ChatConversation = ({ user, interlocutor, messages = [] }: any) => {
+  var box: any = useRef(null);
 
   //scroll to bottom when new message comes
   useEffect(() => {

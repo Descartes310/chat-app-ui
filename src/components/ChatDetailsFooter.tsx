@@ -16,9 +16,9 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ChatBar = ({ onSend }) => {
+const ChatBar = ({ onSend }: any) => {
   const styles = useStyles();
-  const fileInput = useRef(null)
+  const fileInput: any = useRef(null)
 
   const [text, setText] = useState('');
   const [file, setFile] = useState(null);
@@ -42,7 +42,7 @@ const ChatBar = ({ onSend }) => {
   return (
     <Box display="flex" minHeight={70} alignItems="center" px={2}>
       <IconButton edge="start" color="inherit" onClick={() => openFileExplorer()}>
-        <AttachFileIcon className={styles.icon} />
+        <AttachFileIcon />
       </IconButton>
 
       <input
@@ -50,7 +50,7 @@ const ChatBar = ({ onSend }) => {
         type='file'
         ref={fileInput}
         style={{ display: 'none' }}
-        onChange={event => {
+        onChange={(event: any) => {
           setFile(event.target.files[0]);
         }}
         accept="image/png, image/gif, image/jpeg"

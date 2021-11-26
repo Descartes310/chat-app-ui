@@ -18,7 +18,10 @@ const theme = createTheme();
 
 function SignIn(props: any) {
 
+  const [hasError, setHasError] = React.useState(false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    setHasError(false);
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
@@ -27,7 +30,9 @@ function SignIn(props: any) {
       password: data.get('password'),
     }).then(() => {
       window.location.href = HOME;
-    }).catch();
+    }).catch(() => {
+      setHasError(true);
+    });
   };
 
   return (
@@ -49,6 +54,9 @@ function SignIn(props: any) {
             Sign in
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <p style={{ color: 'red', textAlign: 'center', display: hasError ? 'block' : 'none' }}>
+              Your login/password is not correct
+            </p>
             <TextField
               margin="normal"
               required={true}
