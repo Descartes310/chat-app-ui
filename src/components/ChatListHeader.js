@@ -2,11 +2,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
   InputBase,
-  IconButton,
   InputAdornment
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
 
 const useStyles = makeStyles(() => ({
   input: {
@@ -40,10 +38,6 @@ export default function ChatListHeader(props) {
           </InputAdornment>
         }
       />
-
-      <IconButton edge="end" color="primary">
-        <AddCircleIcon />
-      </IconButton>
     </Box>
   );
 }

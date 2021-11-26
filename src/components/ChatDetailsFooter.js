@@ -1,9 +1,9 @@
-import { makeStyles } from "@material-ui/core/styles";
-import { Box, InputBase, IconButton } from "@material-ui/core";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TagFaces from "@material-ui/icons/TagFaces";
-import AttachFileIcon from "@material-ui/icons/AttachFile";
 import SendIcon from "@material-ui/icons/Send";
+import TagFaces from "@material-ui/icons/TagFaces";
+import { makeStyles } from "@material-ui/core/styles";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import { Box, InputBase, IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
   input: {

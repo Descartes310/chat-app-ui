@@ -6,10 +6,8 @@ import ChatIcon from "@material-ui/icons/Chat";
 import { Box, Badge } from "@material-ui/core";
 import AppSidebar from "../components/AppSideBar";
 import ChatDetails from "../components/ChatDetails";
-import LogoIcon from "@material-ui/icons/GroupWork";
 import { setAuthUser } from '../actions/AuthActions';
 import { makeStyles } from "@material-ui/core/styles";
-import SettingsIcon from "@material-ui/icons/Settings";
 import ChatListHeader from "../components/ChatListHeader";
 import MeetingIcon from "@material-ui/icons/RecordVoiceOver";
 

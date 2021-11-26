@@ -1,20 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import TagFaces from '@material-ui/icons/TagFaces';
-import Reply from '@material-ui/icons/Reply';
-import MoreHoriz from '@material-ui/icons/MoreHoriz';
 
 const useStyles = makeStyles(({ palette, spacing }) => {
   const radius = spacing(2.5);
   const size = 30;
   const rightBgColor = palette.primary.main;
-  // if you want the same as facebook messenger, use this color '#09f'
   return {
     avatar: {
       width: size,
@@ -133,15 +127,6 @@ const ChatMsg = ({ avatar, messages, side }) => {
                 {typeof msg === 'object' && msg.type === 'image' && (
                   <img className={styles.image} alt={msg.alt} {...msg} />
                 )}
-                <IconButton className={styles.iconBtn}>
-                  <TagFaces />
-                </IconButton>
-                <IconButton className={styles.iconBtn}>
-                  <Reply />
-                </IconButton>
-                <IconButton className={styles.iconBtn}>
-                  <MoreHoriz />
-                </IconButton>
               </div>
             </div>
           );

@@ -1,16 +1,14 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import CallIcon from "@material-ui/icons/Call";
-import VideoCallIcon from "@material-ui/icons/VideoCall";
+import Avatar from "@material-ui/core/Avatar";
+import AppBar from "@material-ui/core/AppBar";
 import InfoIcon from "@material-ui/icons/Info";
-import MoreIcon from "@material-ui/icons/MoreVert";
+import Toolbar from "@material-ui/core/Toolbar";
+import CallIcon from "@material-ui/icons/Call";
+import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -72,10 +70,6 @@ export default function PrimarySearchAppBar({ user }) {
     handleMobileMenuClose();
   };
 
-  const handleMobileMenuOpen = event => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -127,26 +121,6 @@ export default function PrimarySearchAppBar({ user }) {
           <Typography className={classes.title} variant="h6" noWrap>
             {user.name}
           </Typography>
-          <div className={classes.sectionDesktop}>
-            <IconButton color="inherit">
-              <VideoCallIcon />
-            </IconButton>
-            <IconButton edge="end" color="inherit">
-              <InfoIcon />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              edge="end"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
