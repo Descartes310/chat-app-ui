@@ -5,16 +5,20 @@ import ChatDetailsFooter from "./ChatDetailsFooter";
 import { sendMessages } from "../actions/independentActions";
 
 function ChatDetails({ selectedItem = {}, user, messages = [] }) {
+    const interlocutor = selectedItem.users.filter(u => u.id !== user.id)[0];
 
     const onSendMessages = (content, file) => {
         let data = {};
-        console.log(file)
 
         if(file) {
             data.file = file;
         } else {
             data.content = content;
         }
+
+        // Starting new chat
+        if(selectedItem.id === 0)
+            data.interlocutorId = interlocutor.id;
 
         sendMessages(selectedItem.id, data, { fileData: ['file'], multipart: true });
     }
@@ -23,7 +27,7 @@ function ChatDetails({ selectedItem = {}, user, messages = [] }) {
         <Box display="flex" flexDirection="column" height="100%">
             <ChatDetailsHeader chat={selectedItem} user={user} />
             <Box p={3} height="100%" style={{ overflowY: "auto" }}>
-                <ChatConversation interlocutor={selectedItem.users.filter(u => u.id !== user.id)[0]} user={user} messages={messages} />
+                <ChatConversation interlocutor={interlocutor} user={user} messages={messages} />
             </Box>
             <ChatDetailsFooter onSend={(text, file) => onSendMessages(text, file)} />
         </Box>

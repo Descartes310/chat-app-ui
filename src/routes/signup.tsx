@@ -1,30 +1,34 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import { connect } from 'react-redux';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
-import { AUTH } from '../urls/frontendUrl';
+import { AUTH, HOME } from '../urls/frontendUrl';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
+import { registerUser } from "../actions/AuthActions";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const theme = createTheme();
 
-export default function SignIn() {
+function SignUp(props: any) {
   
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
+    props.registerUser({
       login: data.get('login'),
-      fullname: data.get('fullname'),
+      fullName: data.get('fullname'),
       password: data.get('password'),
-    });
+    }).then(() => {
+      window.location.href = HOME;
+    }).catch();
   };
 
   return (
@@ -94,3 +98,5 @@ export default function SignIn() {
     </ThemeProvider>
   );
 }
+
+export default connect(() => { return {} }, { registerUser })(SignUp);

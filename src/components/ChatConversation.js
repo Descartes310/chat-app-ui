@@ -1,20 +1,16 @@
 import Chat from "./Chat";
 import Box from "@material-ui/core/Box";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-
-const useStyles = makeStyles(() => ({
-  date: {
-    fontWeight: 500,
-    color: "rgba(0,0,0,0.4)",
-    margin: "12px 0",
-    fontSize: 12,
-    textAlign: "center"
-  }
-}));
+import { useRef, useEffect } from "react";
 
 const ChatConversation = ({ user, interlocutor, messages = [] }) => {
-  const styles = useStyles();
+  var box = useRef(null);
+
+  //scroll to bottom when new message comes
+  useEffect(() => {
+    if (messages.length > 0)
+      box.current.scrollIntoView({ behavior: "smooth" })
+  }, [messages]);
+
   return (
     <Box p={"16px 30px 12px 10px"}>
       {
@@ -26,7 +22,7 @@ const ChatConversation = ({ user, interlocutor, messages = [] }) => {
           />
         ))
       }
-      {/* <Typography className={styles.date}>FRI 1:46 PM</Typography> */}
+      <div ref={box} />
     </Box>
   );
 };

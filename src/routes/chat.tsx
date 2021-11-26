@@ -1,48 +1,18 @@
 import { connect } from 'react-redux';
 import SockJsClient from 'react-stomp';
-import Avatar from '@mui/material/Avatar';
+import { Box } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import ChatList from "../components/ChatList";
 import ChatIcon from "@material-ui/icons/Chat";
-import { Box, Badge } from "@material-ui/core";
+import { SOCKET_URL } from '../urls/backendUrl';
 import AppSidebar from "../components/AppSideBar";
 import ChatDetails from "../components/ChatDetails";
-import { setAuthUser } from '../actions/AuthActions';
+import ExitToApp from "@material-ui/icons/ExitToApp";
 import { makeStyles } from "@material-ui/core/styles";
 import { setSelectedChat } from '../actions/ChatActions';
 import ChatListHeader from "../components/ChatListHeader";
-import MeetingIcon from "@material-ui/icons/RecordVoiceOver";
-import { getChats, getMessages } from '../actions/independentActions';
-
-const user = {
-    id: "3",
-    name: "Jagadeesh Palaniappan",
-    lastText: "You sent a photo • 1:05 PM",
-    imgUrl:
-        "https://avatars2.githubusercontent.com/u/24218022?s=460&u=7cc625db65a7effc54069e28432432bd1fc89c44&v=4",
-    status: { read: true, responded: true, online: true }
-};
-
-const items = [
-    {
-        id: "chat",
-        name: "Chat",
-        route: "/chat",
-        icon: (
-            <Badge badgeContent={4} color="secondary">
-                <ChatIcon />
-            </Badge>
-        )
-    },
-    { id: "meet", name: "Meeting", route: "/meet", icon: <MeetingIcon /> },
-    {
-        id: "user",
-        name: "JagChat",
-        icon: <Avatar alt={user.name} src={user.imgUrl} />,
-        endItem: true,
-        iconOnly: true
-    }
-];
+import { setAuthUser, logout } from '../actions/AuthActions';
+import { getChats, getMessages, getUsers } from '../actions/independentActions';
 
 const useStyles = makeStyles(theme => ({
     appContainer: {
@@ -52,13 +22,26 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const SOCKET_URL = 'http://localhost:8080/ws-chat/';
-
 function Chat(props: any) {
     const classes = useStyles();
 
+    const items = [
+        {
+            id: "chat",
+            name: "Chat",
+            route: "/chat",
+            icon: <ChatIcon />
+        },
+        {
+            icon: <ExitToApp style={{ fontSize: 30 }} onClick={() => props.logout()}/>,
+            endItem: true,
+            iconOnly: true
+        }
+    ];    
+
     useEffect(() => {
         getAllChats();
+        getAllUsers();
     }, []);
 
     useEffect(() => {
@@ -68,15 +51,28 @@ function Chat(props: any) {
 
     const [selectedIdx] = useState(0);
     const [chats, setChats] = useState([]);
+    const [users, setUsers] = useState([]);
     const [messages, setMessages] = useState<any>([]);
 
-    const handleClick = (e: any, item: any) => {
+    const handleClick = (item: any, isUser: boolean) => {
+        if(isUser) {
+            item = {
+                id: 0,
+                users: [item]
+            }
+        }
         props.setSelectedChat(item);
     };
 
     const getAllChats = () => {
         getChats().then((chats: any) => {
             setChats(chats);
+        });
+    }
+
+    const getAllUsers = () => {
+        getUsers().then((users: any) => {
+            setUsers(users.filter(u => u.id !== props.authUser.id));
         });
     }
 
@@ -89,8 +85,16 @@ function Chat(props: any) {
     }
 
     const onMessageReceived = (message: any) => {
-        setMessages([...messages, message]);
-        console.log('New Message Received!!', message);
+        //Checking if user need to get the new message
+        if (message.chat.users.map(u => u.id).includes(props.authUser.id)) {
+            setMessages([...messages, message]);
+            console.log('New GOOD Message Received!!', message);
+            //Update chat items
+            getAllChats();
+            getAllUsers();
+        } else {
+            console.log('New BAD Message Received!!', message);
+        }
     }
 
     return (
@@ -117,6 +121,7 @@ function Chat(props: any) {
                     <ChatListHeader />
                     <ChatList
                         items={chats}
+                        users={users}
                         user={props.authUser}
                         onClick={handleClick}
                         selectedItem={props.selectedChat}
@@ -142,4 +147,4 @@ const mapStateToProps = (state: any) => {
     return { authUser: authUser.data, selectedChat: selectedChat.data };
 };
 
-export default connect(mapStateToProps, { setAuthUser, setSelectedChat })(Chat);
+export default connect(mapStateToProps, { setAuthUser, setSelectedChat, logout })(Chat);

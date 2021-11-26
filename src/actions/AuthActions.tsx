@@ -81,6 +81,39 @@ export const loginUserWithLoginAndPassword = (data: any) => (dispatch: any) => {
         });
 };
 
+/**
+ * Redux Action To register User
+ */
+ export const registerUser = (data: any) => (dispatch: any) => {
+
+    const config = getFullAuthorisationRequestConfig();
+
+    return api.post(AUTH.REGISTER, data, config)
+        .then((response: any) => {
+            const data = {
+                accessToken: response.data.accessToken,
+                tokenType: response.data.tokenType,
+                expiresIn: response.data.expiresIn,
+                refreshToken: response.data.refreshToken,
+            };
+
+            // Persist data into localstorage
+            saveAuthToken(data.accessToken, data.tokenType, data.expiresIn, data.refreshToken);
+
+            // Fetch user data
+            dispatch(setAuthUser());
+
+            // Persist data into store
+            dispatch({ type: LOGIN_USER_SUCCESS, payload: data });
+
+            return Promise.resolve();
+        })
+        .catch((error: any) => {
+            dispatch({ type: LOGIN_USER_FAILURE, payload: error });
+            return Promise.reject();
+        });
+};
+
 export const loginIntoStore = (data: any) => (dispatch: any) => {
     // Persist data into store
     dispatch({ type: LOGIN_USER });
@@ -91,7 +124,9 @@ export const loginIntoStore = (data: any) => (dispatch: any) => {
  * Redux Action To Signout User From  Firebase
  */
 export const logout = () => (dispatch: any) => {
+    api.delete(`${AUTH.LOGOUT}`)
     removeAuthToken();
     dispatch({ type: LOGOUT_USER, payload: null });
     dispatch({ type: CLEAR_AUTH_USER, payload: null });
+    window.location.href = FRONTEND_AUTH.LOGIN;
 };

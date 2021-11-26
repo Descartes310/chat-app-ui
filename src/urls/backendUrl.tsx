@@ -4,12 +4,16 @@ export const BASE = `${AppConfig.api.baseUrl}`;
 
 export const AUTH = {
     LOGIN: 'oauth/token',
-    REGISTER: 'auth/register'
+    REGISTER: 'auth/register',
+    LOGOUT: 'api/users/logout',
 };
 
 export const USER = {
-    KYC: 'api/users/kyc'
+    KYC: 'api/users/kyc',
+    GET: 'api/users'
 };
+
+export const SOCKET_URL = 'http://localhost:8080/ws-chat/';
 
 export const CHAT = {
     SELF: 'api/chats',

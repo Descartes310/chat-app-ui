@@ -24,7 +24,7 @@ const ChatBar = ({ onSend }) => {
   const [file, setFile] = useState(null);
 
   useEffect(() => {
-    if(file) {
+    if (file) {
       onSend(null, file);
     }
   }, [file]);
@@ -33,6 +33,11 @@ const ChatBar = ({ onSend }) => {
   const openFileExplorer = () => {
     fileInput.current.click()
   };
+
+  const onSubmit = () => {
+    onSend(text, null);
+    setText('');
+  }
 
   return (
     <Box display="flex" minHeight={70} alignItems="center" px={2}>
@@ -55,13 +60,18 @@ const ChatBar = ({ onSend }) => {
         value={text}
         className={styles.input}
         placeholder={"Type a message..."}
+        onKeyDown={(e) => {
+          //Cheking if enter is pressed
+          if (e.key === 'Enter') {
+            onSubmit();
+          }
+        }}
         onChange={(e) => setText(e.target.value)}
       />
 
       <IconButton edge="end" color="inherit" onClick={() => {
         if (text.trim().length > 0) {
-          onSend(text, null);
-          setText('');
+          onSubmit();
         }
       }}>
         <SendIcon />
