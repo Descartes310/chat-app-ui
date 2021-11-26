@@ -1,11 +1,10 @@
 import cx from 'clsx';
 import PropTypes from 'prop-types';
+import UserAvatar from './UserAvatar';
 import Grid from '@material-ui/core/Grid';
-import Avatar from '@material-ui/core/Avatar';
 import { getFilePath } from '../helpers/helpers';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import UserAvatar from './UserAvatar';
 
 const useStyles = makeStyles(({ palette, spacing }) => {
   const radius = spacing(2.5);
@@ -87,7 +86,7 @@ const useStyles = makeStyles(({ palette, spacing }) => {
   };
 });
 
-const ChatMsg = ({ avatar, messages, side }) => {
+const ChatMsg = ({ avatar, messages, side }: any) => {
   const styles = useStyles();
   const attachClass = index => {
     if (index === 0) {
@@ -115,7 +114,7 @@ const ChatMsg = ({ avatar, messages, side }) => {
             // eslint-disable-next-line react/no-array-index-key
             <div
               key={msg.id || i}
-              className={cx(styles.row, styles[`${side}Row`])}
+              className={cx(styles[`${side}Row`])}
             >
               <div className={cx(styles.msgBox, styles[`${side}MsgBox`])}>
                 {msg.messageType === 'TEXT' && (
@@ -127,7 +126,7 @@ const ChatMsg = ({ avatar, messages, side }) => {
                   </Typography>
                 )}
                 {msg.messageType === 'FILE' && (
-                  <img className={styles.image} src={getFilePath(msg.file)} />
+                  <img className={styles.image} src={getFilePath(msg.file)} alt='Message file'/>
                 )}
               </div>
             </div>

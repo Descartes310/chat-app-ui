@@ -109,7 +109,8 @@ export function toSnakeCase(obj: any) {
             Object.entries(data).map((item: any) => {
                 const encoded = encodeURIComponent(item[1]);
                 const character = _url.includes('?') ? '&' : '?';
-                _url = `${_url}${character}${toSnakeCase(item[0])}=${encoded}`
+                _url = `${_url}${character}${toSnakeCase(item[0])}=${encoded}`;
+                return _url;
             });
         }
         const params = (verb === 'get' || verb === 'delete') ? [_url, config] : [_url, data, config];

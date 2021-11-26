@@ -1,10 +1,9 @@
+import UserAvatar from "./UserAvatar";
 import List from "@material-ui/core/List";
-import Avatar from "@material-ui/core/Avatar";
 import ListItem from "@material-ui/core/ListItem";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import UserAvatar from "./UserAvatar";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ChatListItem = ({ item, selectedItem, onClick, user, isUser }) => {
+const ChatListItem = ({ item, selectedItem, onClick, user, isUser }: any) => {
   const interlocutor = !isUser ? item.users.filter(u => u.id !== user.id)[0] : item;
   return (
     <ListItem

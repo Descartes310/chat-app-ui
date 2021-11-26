@@ -1,7 +1,7 @@
 import Avatar from "@material-ui/core/Avatar";
 import { getFilePath } from '../helpers/helpers';
 
-const UserAvatar = ({avatar = null, name = null, width = '40', height = '40'}) => {
+const UserAvatar = ({avatar = null, name = null, width = '40', height = '40'}: any) => {
 
     let _avatar, _name;
     if (avatar)

@@ -2,10 +2,10 @@
  * App.js Layout Start Here
  */
 import Chat from './routes/chat';
+import { Component } from 'react';
 import SignIn from './routes/login';
 import SignUp from './routes/signup';
 import { connect } from 'react-redux';
-import React, { Component } from 'react';
 import { AUTH, HOME } from "./urls/frontendUrl";
 import { getAuthToken } from "./helpers/tokens";
 import blue from "@material-ui/core/colors/blue";
@@ -43,7 +43,6 @@ class App extends Component<MyProps, MyState> {
    * Check whether the current user is a new or not
    */
   refreshUserDatas = () => {
-    console.log("Je suis dans le refresh user");
     this.props
       .setAuthUser()
       .then(() => this.refreshTokens());
@@ -53,7 +52,6 @@ class App extends Component<MyProps, MyState> {
    * Insert tokens data into store
    */
   refreshTokens = () => {
-    console.log("Je suis dans le refresh token");
     const { accessToken, refreshToken, expiresIn, tokenType } = getAuthToken();
     if (refreshToken && accessToken)
       this.props.loginIntoStore({
@@ -76,7 +74,6 @@ class App extends Component<MyProps, MyState> {
                 <Route path="/" element={<Chat />} />
                 <Route path={HOME} element={<Chat />} />
               </Routes>
-              {/* <Navigate to={HOME} replace /> */}
             </>
           ) : (
             <Routes>
