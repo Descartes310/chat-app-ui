@@ -1,8 +1,7 @@
+import { useState } from 'react';
 import SendIcon from "@material-ui/icons/Send";
-import TagFaces from "@material-ui/icons/TagFaces";
 import { makeStyles } from "@material-ui/core/styles";
 import AttachFileIcon from "@material-ui/icons/AttachFile";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import { Box, InputBase, IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
@@ -17,7 +16,10 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ChatBar = ({ concise }) => {
+const ChatBar = ({ onSend }) => {
+
+  const [text, setText] = useState('');
+
   const styles = useStyles();
   return (
     <Box display="flex" minHeight={70} alignItems="center" px={2}>
@@ -26,18 +28,18 @@ const ChatBar = ({ concise }) => {
       </IconButton>
 
       <InputBase
+        value={text}
         className={styles.input}
         placeholder={"Type a message..."}
-        startAdornment={
-          <InputAdornment position={"start"}>
-            <IconButton edge="start" color="inherit">
-              <TagFaces />
-            </IconButton>
-          </InputAdornment>
-        }
+        onChange={(e) => setText(e.target.value)}
       />
 
-      <IconButton edge="end" color="inherit">
+      <IconButton edge="end" color="inherit" onClick={() => {
+        if (text.trim().length > 0) {
+          onSend(text);
+          setText('');
+        }
+      }}>
         <SendIcon />
       </IconButton>
     </Box>

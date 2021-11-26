@@ -53,7 +53,9 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function PrimarySearchAppBar({ user }) {
+export default function PrimarySearchAppBar({ chat, user }) {
+
+  const interlocutor = chat.users.filter(u => u.id !== user.id)[0];
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -116,10 +118,9 @@ export default function PrimarySearchAppBar({ user }) {
     <div className={classes.grow}>
       <AppBar position="static" color="inherit" elevation={1}>
         <Toolbar>
-          <Avatar alt={user.name} src={user.imgUrl} edge="start" />
-
+          <Avatar alt={interlocutor.fullName} src={interlocutor.avatar} edge="start" />
           <Typography className={classes.title} variant="h6" noWrap>
-            {user.name}
+            {interlocutor.fullName}
           </Typography>
         </Toolbar>
       </AppBar>

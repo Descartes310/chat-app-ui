@@ -1,6 +1,6 @@
-import { useState } from "react";
 import { connect } from 'react-redux';
 import Avatar from '@mui/material/Avatar';
+import { useState, useEffect } from "react";
 import ChatList from "../components/ChatList";
 import ChatIcon from "@material-ui/icons/Chat";
 import { Box, Badge } from "@material-ui/core";
@@ -8,102 +8,82 @@ import AppSidebar from "../components/AppSideBar";
 import ChatDetails from "../components/ChatDetails";
 import { setAuthUser } from '../actions/AuthActions';
 import { makeStyles } from "@material-ui/core/styles";
+import { setSelectedChat } from '../actions/ChatActions';
 import ChatListHeader from "../components/ChatListHeader";
 import MeetingIcon from "@material-ui/icons/RecordVoiceOver";
-
-const users = [
-    {
-        id: "1",
-        name: "Sundaramoorthi SNS",
-        lastText: "You sent a photo • 1:05 PM",
-        imgUrl: "https://i.pravatar.cc/300?img=100",
-        status: { read: true, responded: true, online: true }
-    },
-    {
-        id: "2",
-        name: "Rathna Rajendran",
-        lastText: "Where r u? • 1:54 PM",
-        imgUrl: "https://i.pravatar.cc/300?img=100",
-        status: { read: true, responded: true, online: true }
-    },
-    {
-        id: "3",
-        name: "Jagadeesh Palaniappan",
-        lastText: "You sent a photo • 1:05 PM",
-        imgUrl:
-            "https://avatars2.githubusercontent.com/u/2826368?s=460&u=fa549158be45516110cbf9f0306eb28e5fd42e9e&v=4",
-        status: { read: true, responded: true, online: true }
-    },
-    {
-        id: "4",
-        name: "Sangeeth P",
-        lastText: "You sent a photo • 1:05 PM",
-        imgUrl: "https://i.pravatar.cc/300?img=100",
-        status: { read: true, responded: true, online: true }
-    },
-    {
-        id: "5",
-        name: "Manikavasagam",
-        lastText: "You sent a photo • 1:05 PM",
-        imgUrl: "https://i.pravatar.cc/300?img=100",
-        status: { read: true, responded: true, online: true }
-    },
-    {
-        id: "6",
-        name: "Moheith",
-        lastText: "He sent a photo • 1:05 PM",
-        imgUrl: "https://i.pravatar.cc/300?img=100",
-        status: { read: true, responded: true, online: true }
-    }
-];
+import { getChats, getMessages } from '../actions/independentActions';
 
 const user = {
     id: "3",
     name: "Jagadeesh Palaniappan",
     lastText: "You sent a photo • 1:05 PM",
     imgUrl:
-      "https://avatars2.githubusercontent.com/u/24218022?s=460&u=7cc625db65a7effc54069e28432432bd1fc89c44&v=4",
+        "https://avatars2.githubusercontent.com/u/24218022?s=460&u=7cc625db65a7effc54069e28432432bd1fc89c44&v=4",
     status: { read: true, responded: true, online: true }
-  };
-  
-  const items = [
+};
+
+const items = [
     {
-      id: "chat",
-      name: "Chat",
-      route: "/chat",
-      icon: (
-        <Badge badgeContent={4} color="secondary">
-          <ChatIcon />
-        </Badge>
-      )
+        id: "chat",
+        name: "Chat",
+        route: "/chat",
+        icon: (
+            <Badge badgeContent={4} color="secondary">
+                <ChatIcon />
+            </Badge>
+        )
     },
     { id: "meet", name: "Meeting", route: "/meet", icon: <MeetingIcon /> },
     {
-      id: "user",
-      name: "JagChat",
-      icon: <Avatar alt={user.name} src={user.imgUrl} />,
-      endItem: true,
-      iconOnly: true
+        id: "user",
+        name: "JagChat",
+        icon: <Avatar alt={user.name} src={user.imgUrl} />,
+        endItem: true,
+        iconOnly: true
     }
-  ];
+];
 
 const useStyles = makeStyles(theme => ({
     appContainer: {
-      flexGrow: 1,
-      display: "flex",
-      height: "100vh"
+        flexGrow: 1,
+        display: "flex",
+        height: "100vh"
     }
-  }));
+}));
 
 function Chat(props: any) {
     const classes = useStyles();
 
+    useEffect(() => {
+        getAllChats();
+    }, []);
+
+    useEffect(() => {
+        if (props.selectedChat)
+            getAllMessages();
+    }, [props.selectedChat]);
+
     const [selectedIdx] = useState(0);
-    const [selectedItem, setSelectedItem] = useState(false);
+    const [chats, setChats] = useState([]);
+    const [messages, setMessages] = useState([]);
+
     const handleClick = (e: any, item: any) => {
-        console.log("handleClick: item:", item);
-        setSelectedItem(item);
+        props.setSelectedChat(item);
     };
+
+    const getAllChats = () => {
+        getChats().then((chats: any) => {
+            setChats(chats);
+        });
+    }
+
+    const getAllMessages = () => {
+        if (!props.selectedChat)
+            return
+        getMessages(props.selectedChat.id).then((messages: any) => {
+            setMessages(messages);
+        });
+    }
 
     return (
         <div className={classes.appContainer}>
@@ -121,13 +101,20 @@ function Chat(props: any) {
                 >
                     <ChatListHeader />
                     <ChatList
-                        items={users}
-                        selectedItem={selectedItem}
+                        items={chats}
+                        user={props.authUser}
                         onClick={handleClick}
+                        selectedItem={props.selectedChat}
                     />
                 </Box>
                 <Box flexGrow={1}>
-                    <ChatDetails />
+                    {props.selectedChat && (
+                        <ChatDetails
+                            messages={messages}
+                            user={props.authUser}
+                            selectedItem={props.selectedChat}
+                        />
+                    )}
                 </Box>
             </Box>
         </div>
@@ -136,8 +123,8 @@ function Chat(props: any) {
 
 // map state to props
 const mapStateToProps = (state: any) => {
-    const { authUser } = state
-    return { authUser: authUser.data };
+    const { authUser, selectedChat } = state
+    return { authUser: authUser.data, selectedChat: selectedChat.data };
 };
 
-export default connect(mapStateToProps, { setAuthUser })(Chat);
+export default connect(mapStateToProps, { setAuthUser, setSelectedChat })(Chat);

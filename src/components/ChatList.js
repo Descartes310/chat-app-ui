@@ -15,39 +15,39 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ChatListItem = ({ item, selectedItem, onClick }) => {
-  console.log("ChatListItem: selectedItem:", selectedItem);
+const ChatListItem = ({ item, selectedItem, onClick, user }) => {
+  const interlocutor = item.users.filter(u => u.id !== user.id)[0];
   return (
     <ListItem
       alignItems="flex-start"
       button
       onClick={e => onClick(e, item)}
-      selected={selectedItem.id === item.id}
+      selected={selectedItem ? selectedItem.id === item.id : false}
     >
       <ListItemAvatar>
-        <Avatar alt={item.name} src={item.imgUrl} />
+        <Avatar alt={interlocutor.fullName} src={interlocutor.avatar} />
       </ListItemAvatar>
       <ListItemText
-        primary={item.name}
-        secondary={item.lastText}
+        primary={interlocutor.fullName}
         primaryTypographyProps={{ noWrap: true }}
         secondaryTypographyProps={{ noWrap: true }}
-        // classes={{ primary: styles.primary, secondary: styles.secondary }}
+        secondary={item.lastMessage ?  item.lastMessage.content : `Say Hi to ${interlocutor.fullName}`}
       />
     </ListItem>
   );
 };
 
-export default function ChatList({ items, selectedItem, onClick }) {
+export default function ChatList({ items, selectedItem, onClick, user }) {
   const classes = useStyles();
   return (
     <List className={classes.root}>
       {items.map((item, idx) => (
         <ChatListItem
           key={idx}
+          user={user}
           item={item}
-          selectedItem={selectedItem}
           onClick={onClick}
+          selectedItem={selectedItem}
         />
       ))}
     </List>

@@ -1,3 +1,4 @@
+import api from '../api';
 import AppConfig from '../constants/AppConfig';
 
 export const objectToFormData = (obj: any) => {
@@ -91,4 +92,30 @@ export function toSnakeCase(obj: any) {
     return ((authUser !== null &&
         authUser !== undefined)
     );
+};
+
+/**
+ * Perform normal request
+ * @param verb
+ * @param url
+ * @param data
+ * @param config
+ * @returns {Promise<any>}
+ */
+ export const makeRequest = (verb: string, url: string, data: any = null, config = {}) => {
+    return new Promise((resolve, reject) => {
+        let _url = url;
+        if ((verb === 'get' || verb === 'delete') && data) {
+            Object.entries(data).map((item: any) => {
+                const encoded = encodeURIComponent(item[1]);
+                const character = _url.includes('?') ? '&' : '?';
+                _url = `${_url}${character}${toSnakeCase(item[0])}=${encoded}`
+            });
+        }
+        const params = (verb === 'get' || verb === 'delete') ? [_url, config] : [_url, data, config];
+        // @ts-ignore
+        api[verb](...params)
+            .then((result: any) => resolve(result.data))
+            .catch((error: any) => reject(error));
+    });
 };

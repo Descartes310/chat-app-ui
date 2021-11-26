@@ -1,25 +1,22 @@
 import { Box } from "@material-ui/core";
-import ChatDetailsHeader from "./ChatDetailsHeader";
 import ChatConversation from "./ChatConversation";
+import ChatDetailsHeader from "./ChatDetailsHeader";
 import ChatDetailsFooter from "./ChatDetailsFooter";
+import { sendMessages } from "../actions/independentActions";
 
-const chatUser = {
-    id: "3",
-    name: "Jagadeesh Palaniappan",
-    lastText: "You sent a photo • 1:05 PM",
-    imgUrl:
-        "https://avatars2.githubusercontent.com/u/2826368?s=460&u=fa549158be45516110cbf9f0306eb28e5fd42e9e&v=4",
-    status: { read: true, responded: true, online: true }
-};
+function ChatDetails({ selectedItem = {}, user, messages = [] }) {
 
-function ChatDetails(props) {
+    const onSendMessages = (content) => {
+        sendMessages(selectedItem.id, { content });
+    }
+
     return (
         <Box display="flex" flexDirection="column" height="100%">
-            <ChatDetailsHeader user={chatUser} />
+            <ChatDetailsHeader chat={selectedItem} user={user} />
             <Box p={3} height="100%" style={{ overflowY: "auto" }}>
-                <ChatConversation />
+                <ChatConversation interlocutor={selectedItem.users.filter(u => u.id !== user.id)[0]} user={user} messages={messages} />
             </Box>
-            <ChatDetailsFooter />
+            <ChatDetailsFooter onSend={(text) => onSendMessages(text)} />
         </Box>
     );
 }
