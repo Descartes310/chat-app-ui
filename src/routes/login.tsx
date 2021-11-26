@@ -5,6 +5,7 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
+import { AUTH } from '../urls/frontendUrl';
 import TextField from '@mui/material/TextField';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -75,7 +76,7 @@ function SignIn(props: any) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href={AUTH.REGISTER} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
@@ -87,4 +88,4 @@ function SignIn(props: any) {
   );
 }
 
-export default connect(() => { }, { loginUserWithLoginAndPassword })(SignIn);
+export default connect(() => { return {} }, { loginUserWithLoginAndPassword })(SignIn);
