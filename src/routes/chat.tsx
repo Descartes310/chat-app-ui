@@ -33,11 +33,11 @@ function Chat(props: any) {
             icon: <ChatIcon />
         },
         {
-            icon: <ExitToApp style={{ fontSize: 30 }} onClick={() => props.logout()}/>,
+            icon: <ExitToApp style={{ fontSize: 30 }} onClick={() => props.logout()} />,
             endItem: true,
             iconOnly: true
         }
-    ];    
+    ];
 
     useEffect(() => {
         getAllChats();
@@ -55,7 +55,7 @@ function Chat(props: any) {
     const [messages, setMessages] = useState<any>([]);
 
     const handleClick = (item: any, isUser: boolean) => {
-        if(isUser) {
+        if (isUser) {
             item = {
                 id: 0,
                 users: [item]
@@ -87,7 +87,9 @@ function Chat(props: any) {
     const onMessageReceived = (message: any) => {
         //Checking if user need to get the new message
         if (message.chat.users.map(u => u.id).includes(props.authUser.id)) {
-            setMessages([...messages, message]);
+            //Adding message if it's the opened chat
+            if (message.chat.id === props.selectedChat.id)
+                setMessages([...messages, message]);
             console.log('New GOOD Message Received!!', message);
             //Update chat items
             getAllChats();

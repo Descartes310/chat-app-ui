@@ -4,6 +4,7 @@ import ListItem from "@material-ui/core/ListItem";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import UserAvatar from "./UserAvatar";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,7 +31,7 @@ const ChatListItem = ({ item, selectedItem, onClick, user, isUser }) => {
       selected={selectedItem ? selectedItem.id === item.id : false}
     >
       <ListItemAvatar>
-        <Avatar alt={interlocutor.fullName} src={interlocutor.avatar} />
+        <UserAvatar name={interlocutor.fullName} avatar={interlocutor.avatar} />
       </ListItemAvatar>
       <ListItemText
         primary={interlocutor.fullName}

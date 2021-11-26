@@ -1,6 +1,6 @@
 import React from "react";
+import UserAvatar from "./UserAvatar";
 import Menu from "@material-ui/core/Menu";
-import Avatar from "@material-ui/core/Avatar";
 import AppBar from "@material-ui/core/AppBar";
 import InfoIcon from "@material-ui/icons/Info";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -118,7 +118,7 @@ export default function PrimarySearchAppBar({ chat, user }) {
     <div className={classes.grow}>
       <AppBar position="static" color="inherit" elevation={1}>
         <Toolbar>
-          <Avatar alt={interlocutor.fullName} src={interlocutor.avatar} edge="start" />
+          <UserAvatar name={interlocutor.fullName} avatar={interlocutor.avatar} edge="start" />
           <Typography className={classes.title} variant="h6" noWrap>
             {interlocutor.fullName}
           </Typography>

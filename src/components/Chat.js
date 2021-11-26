@@ -5,6 +5,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { getFilePath } from '../helpers/helpers';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import UserAvatar from './UserAvatar';
 
 const useStyles = makeStyles(({ palette, spacing }) => {
   const radius = spacing(2.5);
@@ -105,7 +106,7 @@ const ChatMsg = ({ avatar, messages, side }) => {
     >
       {side === 'left' && (
         <Grid item>
-          <Avatar src={avatar} className={cx(styles.avatar)} />
+          <UserAvatar avatar={avatar} name={messages[0].sender.fullName} className={cx(styles.avatar)} />
         </Grid>
       )}
       <Grid item xs>
