@@ -1,7 +1,5 @@
-import React from "react";
-import cx from "clsx";
+import { Tabs, Tab } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { Tabs, Tab, Badge, Avatar, Box } from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   tabs: {

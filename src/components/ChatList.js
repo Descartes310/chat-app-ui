@@ -1,10 +1,7 @@
-import React from "react";
 import List from "@material-ui/core/List";
 import Avatar from "@material-ui/core/Avatar";
-import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Paper } from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 

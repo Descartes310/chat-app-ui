@@ -1,10 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
-  Typography,
-  Paper,
   InputBase,
   IconButton,
   InputAdornment

@@ -1,10 +1,7 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 import Chat from "./Chat";
-
-const AVATAR = "https://i.pravatar.cc/300?img=13";
+import Box from "@material-ui/core/Box";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles(() => ({
   date: {

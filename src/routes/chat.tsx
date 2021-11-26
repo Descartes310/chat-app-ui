@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { connect } from 'react-redux';
+import Avatar from '@mui/material/Avatar';
 import ChatList from "../components/ChatList";
 import ChatIcon from "@material-ui/icons/Chat";
+import { Box, Badge } from "@material-ui/core";
 import AppSidebar from "../components/AppSideBar";
 import ChatDetails from "../components/ChatDetails";
 import LogoIcon from "@material-ui/icons/GroupWork";
 import { setAuthUser } from '../actions/AuthActions';
 import { makeStyles } from "@material-ui/core/styles";
-import { Box, Avatar, Badge } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import ChatListHeader from "../components/ChatListHeader";
 import MeetingIcon from "@material-ui/icons/RecordVoiceOver";
@@ -68,7 +69,6 @@ const user = {
   };
   
   const items = [
-    { id: "logo", name: "JagChat", icon: <LogoIcon />, iconOnly: true },
     {
       id: "chat",
       name: "Chat",
@@ -81,16 +81,10 @@ const user = {
     },
     { id: "meet", name: "Meeting", route: "/meet", icon: <MeetingIcon /> },
     {
-      id: "setting",
-      name: "Settings",
-      icon: <SettingsIcon />,
-      iconOnly: true,
-      endItem: true
-    },
-    {
       id: "user",
       name: "JagChat",
-      icon: null,
+      icon: <Avatar alt={user.name} src={user.imgUrl} />,
+      endItem: true,
       iconOnly: true
     }
   ];
@@ -106,7 +100,7 @@ const useStyles = makeStyles(theme => ({
 function Chat(props: any) {
     const classes = useStyles();
 
-    const [selectedIdx, setSelectedIdx] = useState(1);
+    const [selectedIdx] = useState(0);
     const [selectedItem, setSelectedItem] = useState(false);
     const handleClick = (e: any, item: any) => {
         console.log("handleClick: item:", item);
